@@ -1,0 +1,172 @@
+<h1 class="mt-4"><i class="fas fa-shipping-fast"></i> Fabricantes</h1>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">Consulta</li>
+</ol>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-outline-warning" (click)="novoCadastro()">
+        <i class="fa fa-plus"></i> Novo
+      </button>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-condensed table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Nome</th>
+            <th class="text-center">CNPJ</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let fabricante of fabricantes">
+            <td class="text-center">{{ fabricante.id }}</td>
+            <td class="text-center">{{ fabricante.nome }}</td>
+            <td class="text-center">{{ fabricante.cnpj }}</td>
+            <td>
+
+              <button class="btn btn-outline-primary" routerLink="/fabricantes/form/{{fabricante.id}}">
+                <i class="fa fa-pencil-alt"></i>
+              </button>
+
+              <button class="btn btn-outline-danger ml-1" (click)="preparaDelecao(fabricante)" data-toggle="modal"
+                data-target="#modalDelecao">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+
+              <button class="btn btn-outline-info ml-1" (click)="preparaVerificacao(fabricante)" data-toggle="modal"
+                data-target="#modalVerificacao">
+                <i class="fa fa-search"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="modalVerificacao" class="modal fade" role="dialog">
+
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Dados do Fabricante</h4>
+        </div>
+
+        <div class="modal-body" *ngIf="fabricanteVerificacao">
+
+          <table class="table table-responsive">
+            <thead>
+              <th class="text-center">ID</th>
+              <th class="text-center">Data de Cadastro</th>
+            </thead>
+            <tbody>
+              <td>{{ fabricanteVerificacao.id }}</td>
+              <td>{{ fabricanteVerificacao.dataCadastro }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Dados Empresariais</li>
+            </ol>
+            <thead>
+              <th>Nome</th>
+              <th>CNPJ</th>
+              <th>Categoria</th>
+            </thead>
+            <tbody>
+              <td>{{ fabricanteVerificacao.nome }}</td>
+              <td>{{ fabricanteVerificacao.cnpj }}</td>
+              <td>{{ fabricanteVerificacao.categoria }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Contato</li>
+            </ol>
+            <thead>
+              <th class="text-center">Telefone</th>
+              <th class="text-center">Celular</th>
+              <th class="text-center">Email</th>
+            </thead>
+            <tbody>
+              <td>{{ fabricanteVerificacao.telefone }}</td>
+              <td>{{ fabricanteVerificacao.celular }}</td>
+              <td>{{ fabricanteVerificacao.email }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Endereço</li>
+            </ol>
+            <thead>
+              <th class="text-center">Endereço</th>
+              <th class="text-center">Bairro</th>
+              <th class="text-center">Número</th>
+              <th class="text-center">Cep</th>
+              <th class="text-center">Complemto</th>
+              <th class="text-center">Cidade</th>
+              <th class="text-center">Estado</th>
+            </thead>
+            <tbody>
+              <td class="text-center">{{ fabricanteVerificacao.endereco }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.bairro }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.numero }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.cep }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.complemento }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.cidade }}</td>
+              <td class="text-center">{{ fabricanteVerificacao.estado }}</td>
+            </tbody>
+          </table>
+        </div>
+        <br />
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-danger" data-dismiss="modal">
+            <i class="fa fa-times"></i> Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDelecao" class="modal fade" role="dialog">
+
+    <div class="modal-dialog responsive">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confimação</h4>
+        </div>
+
+        <div class="modal-body" *ngIf="fabricanteSelecionado">
+          Confirma a Deleção do Fabricante - {{ fabricanteSelecionado.nome }}
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-success" (click)="deletarFabricante()" data-dismiss="modal">
+            <i class="fas fa-check"></i> Confirmar
+          </button>
+
+          <button class="btn btn-outline-danger" data-dismiss="modal">
+            <i class="fa fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

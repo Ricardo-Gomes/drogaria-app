@@ -1,0 +1,200 @@
+<h1 class="mt-4">
+  <i class="far fa-id-badge"></i> Funcionários</h1>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">Consulta</li>
+</ol>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      <button class="btn btn-outline-warning" (click)="novoCadastro()">
+        <i class="fa fa-plus"></i> Novo
+      </button>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-condensed table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Nome</th>
+            <th class="text-center">CPF</th>
+            <th class="text-center">Função</th>
+            <th class="text-center">Matricula</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let funcionario of funcionarios">
+            <td class="text-center">{{ funcionario.id }}</td>
+            <td class="text-center">{{ funcionario.nome }}</td>
+            <td class="text-center">{{ funcionario.cpf }}</td>
+            <td class="text-center">{{ funcionario.funcao }}</td>
+            <td class="text-center">{{ funcionario.matricula }}</td>
+            <td>
+
+              <button class="btn btn-outline-primary" routerLink="/funcionarios/form/{{funcionario.id}}">
+                <i class="fa fa-pencil-alt"></i>
+              </button>
+
+              <button class="btn btn-outline-danger ml-1" (click)="preparaDelecao(funcionario)" data-toggle="modal"
+                data-target="#modalDelecao">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+
+              <button class="btn btn-outline-info ml-1" (click)="preparaVerificacao(funcionario)" data-toggle="modal"
+                data-target="#modalVerificacao">
+                <i class="fa fa-search"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="modalVerificacao" class="modal fade" role="dialog">
+
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Dados do Cliente</h4>
+        </div>
+
+        <div class="modal-body " *ngIf="funcionarioVerificacao">
+
+          <table class="table table-responsive">
+            <thead>
+              <th class="text-center">ID</th>
+              <th class="text-center">Data de Cadastro</th>
+            </thead>
+            <tbody>
+              <td>{{ funcionarioVerificacao.id }}</td>
+              <td>{{ funcionarioVerificacao.dataCadastro }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Dados Pessoais</li>
+            </ol>
+            <thead>
+              <th class="text-center">Nome</th>
+              <th class="text-center">CPF</th>
+              <th class="text-center">RG</th>
+              <th class="text-center">Estado Civil</th>
+              <th class="text-center">Sexo</th>
+              <th class="text-center">Data de Nascimento</th>
+            </thead>
+            <tbody>
+              <td class="text-center">{{ funcionarioVerificacao.nome }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.cpf }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.rg }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.estadoCivil }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.sexo }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.dataNascimento }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Contato</li>
+            </ol>
+            <thead>
+              <th class="text-center">Telefone</th>
+              <th class="text-center">Celular</th>
+              <th class="text-center">Email</th>
+            </thead>
+            <tbody>
+              <td class="text-center">{{ funcionarioVerificacao.telefone }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.celular }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.email }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Endereço</li>
+            </ol>
+            <thead>
+              <th class="text-center">Endereço</th>
+              <th class="text-center">Bairro</th>
+              <th class="text-center">Número</th>
+              <th class="text-center">Cep</th>
+              <th class="text-center">Complemto</th>
+              <th class="text-center">Cidade</th>
+              <th class="text-center">Estado</th>
+            </thead>
+            <tbody>
+              <td class="text-center">{{ funcionarioVerificacao.endereco }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.bairro }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.numero }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.cep }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.complemento }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.cidade }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.estado }}</td>
+            </tbody>
+            <br />
+            <ol class="breadcrumb mb-4">
+              <li class="breadcrumb-item active">Dados do Funcionário</li>
+            </ol>
+            <thead>
+              <th class="text-center">Data de Admissão</th>
+              <th class="text-center">Matricula</th>
+              <th class="text-center">Função</th>
+              <th class="text-center">Carteira de Trabalho</th>
+              <th class="text-center">Tipo de Contrato</th>
+            </thead>
+            <tbody>
+              <td class="text-center">{{ funcionarioVerificacao.dataAdmissao }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.matricula }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.funcao }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.carteiraTrabalho }}</td>
+              <td class="text-center">{{ funcionarioVerificacao.tipoContrato }}</td>
+            </tbody>
+          </table>
+        </div>
+        <br />
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-danger" data-dismiss="modal">
+            <i class="fa fa-times"></i> Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDelecao" class="modal fade" role="dialog">
+
+    <div class="modal-dialog responsive">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Confimação</h4>
+        </div>
+
+        <div class="modal-body" *ngIf="funcionarioSelecionado">
+          Confirma a Deleção do(a) Funcionário - {{ funcionarioSelecionado.nome }}
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-success" (click)="deletarFuncionario()" data-dismiss="modal">
+            <i class="fas fa-check"></i> Confirmar
+          </button>
+
+          <button class="btn btn-outline-danger" data-dismiss="modal">
+            <i class="fa fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

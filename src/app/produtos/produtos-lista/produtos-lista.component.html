@@ -1,0 +1,148 @@
+<h1 class="mt-4"><i class="fas fa-briefcase"></i> Produtos</h1>
+<ol class="breadcrumb mb-4">
+  <li class="breadcrumb-item active">Consulta</li>
+</ol>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+        {{ mensagemSucesso }}
+      </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </div>
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <button class="btn btn-outline-warning  ml-1" (click)="novoCadastro()">
+          <i class="fa fa-plus"></i> Novo
+        </button>
+      </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+      <div class="alert alert-warning" role="alert" *ngIf="message">
+        {{ message }}
+      </div>
+
+      <div class="col-md-12">
+        <table class="table table-condensed table-hover">
+          <thead>
+            <tr>
+              <th class="text-center">ID</th>
+              <th class="text-center">Nome</th>
+              <th class="text-center">Fabricante</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let produto of produtos">
+              <td class="text-center">{{ produto.id }}</td>
+              <td class="text-center">{{ produto.nome }}</td>
+              <td class="text-center">{{ produto.fabricante.nome }}</td>
+              <td>
+
+                <button class="btn btn-outline-primary" routerLink="/produtos/form/{{produto.id}}">
+                  <i class="fa fa-pencil-alt"></i>
+                </button>
+
+                <button class="btn btn-outline-danger ml-1" (click)="preparaDelecao(produto)" data-toggle="modal"
+                  data-target="#modalDelecao">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+
+                <button class="btn btn-outline-info ml-1" (click)="preparaVerificacao(produto)" data-toggle="modal"
+                  data-target="#modalVerificacao">
+                  <i class="fa fa-search"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="modalVerificacao" class="modal fade" role="dialog">
+
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Dados do Produto</h4>
+          </div>
+
+          <div class="modal-body " *ngIf="produtoVerificacao">
+
+            <table class="table table-responsive">
+              <thead>
+                <th class="text-center">ID</th>
+                <th class="text-center">Data de Cadastro</th>
+              </thead>
+              <tbody>
+                <td class="text-center">{{ produtoVerificacao.id }}</td>
+                <td class="text-center">{{ produtoVerificacao.dataCadastro }}</td>
+              </tbody>
+              <thead>
+                <th class="text-center">Nome</th>
+                <th class="text-center">Descrição</th>
+                <th class="text-center">Estoque</th>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">Marca</th>
+                <th class="text-center">Valor de Venda</th>
+                <th class="text-center">Valor de Custo</th>
+                <th class="text-center">Fabricante</th>
+              </thead>
+              <tbody>
+                <td class="text-center">{{ produtoVerificacao.nome }}</td>
+                <td class="text-center">{{ produtoVerificacao.descricao }}</td>
+                <td class="text-center">{{ produtoVerificacao.estoque }}</td>
+                <td class="text-center">{{ produtoVerificacao.categoria }}</td>
+                <td class="text-center">{{ produtoVerificacao.marca }}</td>
+                <td class="text-center">{{ produtoVerificacao.valorVenda }}</td>
+                <td class="text-center">{{ produtoVerificacao.valorCusto }}</td>
+                <td class="text-center">{{ produtoVerificacao.fabricante.nome }}</td>
+              </tbody>
+            </table>
+          </div>
+          <br />
+
+          <div class="modal-footer">
+            <button class="btn btn-outline-danger" data-dismiss="modal">
+              <i class="fa fa-times"></i> Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalDelecao" class="modal fade" role="dialog">
+
+      <div class="modal-dialog responsive">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Confimação</h4>
+          </div>
+
+          <div class="modal-body" *ngIf="produtoSelecionado">
+            Confirma a Deleção do Produto - {{ produtoSelecionado.nome }}
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-outline-success" (click)="deletarProduto()" data-dismiss="modal">
+              <i class="fas fa-check"></i> Confirmar
+            </button>
+
+            <button class="btn btn-outline-danger" data-dismiss="modal">
+              <i class="fa fa-times"></i> Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
